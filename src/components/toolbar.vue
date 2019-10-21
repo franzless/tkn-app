@@ -20,10 +20,7 @@ export default {
   data: () => ({
     
    
-  }),
-  mounted(){
-    this.$store.dispatch('get_users')        
-  },
+  }), 
   computed:{
     dialog(){
       return this.$store.getters.dialog_NEUER

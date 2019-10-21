@@ -4,7 +4,7 @@
         <v-toolbar color="primary">
             <v-icon class="mr-2">mdi-border-color</v-icon>
             <v-toolbar-title>Neuer Eintrag</v-toolbar-title></v-toolbar>       
-        <v-card outlined>           
+        <v-card outlined :loading="loading">           
        <v-form>
            <v-container>
                <v-row wrap>
@@ -18,13 +18,16 @@
                         >
                             <template v-slot:activator="{ on }">
                             <v-text-field
-                                v-model="datum"
+                                v-model="DateFormatted"
                                 label="Datum"
                                 prepend-icon="mdi-calendar"                                
                                 v-on="on"
+                                readonly
                             ></v-text-field>
                             </template>
                             <v-date-picker
+                            first-day-of-week="1"
+                            locale="de"
                             v-if="modal3"
                             v-model="datum"
                             full-width
@@ -104,10 +107,15 @@
             </v-container>
         </v-form>
         </v-card>         
-    </v-dialog>   
+    </v-dialog>
+     <v-snackbar v-model="snack.status" :timeout="3000" :color="snack.snackColor">
+      {{ snack.snackText }}
+      <v-btn flat @click="snack.status = false">Close</v-btn>
+    </v-snackbar>         
     </div>
 </template>
 <script>
+var moment = require('moment');
 export default {
     props:['dialog'],
     data(){
@@ -118,7 +126,19 @@ export default {
             modal2:false,
             ende:'',
             datum:'',
-            modal3:false
+            modal3:false,
+                        
+        }
+    },
+    computed:{
+        DateFormatted(){
+            return this.datum ? moment(this.datum).format('DD.MM.YYYY') : ''
+        },
+        loading(){
+            return this.$store.getters.get_loading
+        },
+        snack(){
+        return this.$store.getters.get_snack    
         }
     },    
     methods:{
@@ -126,8 +146,9 @@ export default {
              this.$store.commit('SET_dialog_NEUER',false)
         },
         submit(){
-            this.$store.dispatch('SET_NEUER_EINTRAG',{kommentar:this.comment,beginn:this.beginn,datum:this.datum,ende:this.ende})
-        }
+            this.$store.dispatch('SET_NEUER_EINTRAG',{kommentar:this.comment,beginn:this.beginn,datum:this.DateFormatted,ende:this.ende,unix:moment(this.datum, "YYYY-MM-DD").unix()})
+        },        
+        
     }
     
 }
