@@ -110,7 +110,7 @@
     </v-dialog>
      <v-snackbar v-model="snack.status" :timeout="3000" :color="snack.snackColor">
       {{ snack.snackText }}
-      <v-btn flat @click="snack.status = false">Close</v-btn>
+      <v-btn @click="snack.status = false">Close</v-btn>
     </v-snackbar>         
     </div>
 </template>
@@ -146,10 +146,10 @@ export default {
              this.$store.commit('SET_dialog_NEUER',false)
         },
         submit(){
-            this.$store.dispatch('SET_NEUER_EINTRAG',{kommentar:this.comment,beginn:this.beginn,datum:this.DateFormatted,ende:this.ende,unix:moment(this.datum, "YYYY-MM-DD").unix()})
-        },        
+            var unix = moment(this.datum, "YYYY-MM-DD").unix()
+            this.$store.dispatch('SET_NEUER_EINTRAG',{datum:this.DateFormatted,unix:unix,daten:[{kommentar:this.comment,beginn:this.beginn,ende:this.ende}]})        
         
     }
     
-}
+}}
 </script>
