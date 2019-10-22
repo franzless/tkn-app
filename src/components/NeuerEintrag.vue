@@ -39,7 +39,7 @@
                 </v-dialog>
 
                    </v-col>                  
-                   <v-col cols="6">
+                   <v-col cols="5">
                        <v-dialog
                             ref="dialog"
                             v-model="modal"
@@ -68,7 +68,7 @@
                 </v-dialog>
 
                    </v-col>
-                    <v-col cols="6">
+                    <v-col cols="5">
                        <v-dialog
                             ref="dialog2"
                             v-model="modal2"
@@ -95,6 +95,9 @@
                             <v-btn text color="primary" @click="$refs.dialog2.save(ende)">OK</v-btn>
                             </v-time-picker>
                 </v-dialog>
+                   </v-col>
+                   <v-col cols="2">
+                       <v-text-field prepend-icon="mdi-clock" label="Pause" v-model="pause" hint="in min"></v-text-field>
                    </v-col>
                     <v-col cols="12">
                        <v-textarea rows="3" autocomplete prepend-icon="mdi-comment" label="Kommentar" v-model="comment" auto-grow></v-textarea>
@@ -127,6 +130,7 @@ export default {
             ende:'',
             datum:'',
             modal3:false,
+            pause:''
                         
         }
     },
@@ -147,7 +151,7 @@ export default {
         },
         submit(){
             var unix = moment(this.datum, "YYYY-MM-DD").unix()
-            this.$store.dispatch('SET_NEUER_EINTRAG',{datum:this.DateFormatted,unix:unix,daten:[{kommentar:this.comment,beginn:this.beginn,ende:this.ende}]})        
+            this.$store.dispatch('SET_NEUER_EINTRAG',{datum:this.DateFormatted,unix:unix,UID:'u66WmdRu57bAdn4nTWg9bvCPdcZ2',daten:{pause:this.pause,kommentar:this.comment,beginn:this.beginn,ende:this.ende}})        
         
     }
     
