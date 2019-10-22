@@ -28,19 +28,21 @@ export default new Vuex.Store({
     },
     SET_ITEMS:(state,payload)=>{
       if(payload.length>0){
+
       var dates = payload.map(m=>m.datum).filter((value, index, self)=>{return self.indexOf(value) === index;})
-      console.log(dates)      
+          
       for(var x = 0;x<dates.length;x++){
+        console.log(dates[x])
         var cache = []
         cache = payload.filter(f => f.datum === dates[x])
         var daten = []        
         cache.forEach(c=>daten.push(c.daten))               
-        var result = {datum:cache[0].datum,unix:cache[0].unix,UID:cache[0].uid,daten}
-        console.log(result)
+        var result = {datum:cache[0].datum,unix:cache[0].unix,UID:cache[0].uid,daten}        
         state.items.push(result)
-    }}else{
-      state.items= payload
-  }console.log(state.items)}
+    }
+  }else{
+      state.items= []
+  }}
   },
   getters:{
     dialog_NEUER:state=>{

@@ -151,7 +151,8 @@ export default {
         },
         submit(){
             var unix = moment(this.datum, "YYYY-MM-DD").unix()
-            this.$store.dispatch('SET_NEUER_EINTRAG',{datum:this.DateFormatted,unix:unix,UID:'u66WmdRu57bAdn4nTWg9bvCPdcZ2',daten:{pause:this.pause,kommentar:this.comment,beginn:this.beginn,ende:this.ende}})        
+            this.$store.dispatch('SET_NEUER_EINTRAG',{datum:this.DateFormatted,unix:unix,UID:'u66WmdRu57bAdn4nTWg9bvCPdcZ2',daten:{pause:this.pause,kommentar:this.comment,beginn:this.beginn,ende:this.ende}})
+                    
         
     }
     
